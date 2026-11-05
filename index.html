@@ -1,0 +1,643 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ex 07 - Working with jQuery</title>
+
+    <!-- jQuery Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f2f5fa;
+            color: #222;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 25px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #174ea6;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 12px;
+        }
+
+        input {
+            padding: 10px;
+            width: 100%;
+            margin: 7px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 11px 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .result-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            flex: 1;
+            min-width: 130px;
+            padding: 18px;
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .rent {
+            background: #2563eb;
+        }
+
+        .accessories {
+            background: #16a34a;
+        }
+
+        .emergency {
+            background: #7c3aed;
+        }
+
+        .savings {
+            background: #db2777;
+        }
+
+        .cake-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .cake-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            background: #fffafa;
+        }
+
+        .cake-image {
+            font-size: 65px;
+            padding: 15px;
+            background: #fff0e8;
+            border-radius: 10px;
+        }
+
+        .cake-card h3 {
+            color: #9d174d;
+        }
+
+        .cake-card input {
+            text-align: center;
+        }
+
+        .bill {
+            margin-top: 20px;
+            padding: 20px;
+            background: #ecfdf5;
+            border-radius: 8px;
+            border: 1px solid #86efac;
+            text-align: center;
+        }
+
+        .bill h2 {
+            color: #15803d;
+            border: none;
+        }
+
+        .total {
+            color: #dc2626;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        /* Car Workshop */
+
+        .car-area {
+            background: #e0f2fe;
+            border-radius: 12px;
+            padding: 40px 10px;
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .car {
+            position: relative;
+            width: 240px;
+            height: 130px;
+            margin: 0 auto;
+        }
+
+        .car-roof {
+            position: absolute;
+            width: 125px;
+            height: 65px;
+            top: 5px;
+            left: 58px;
+            background: #22c55e;
+            border-radius: 45px 45px 0 0;
+            clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+        }
+
+        .car-body {
+            position: absolute;
+            width: 240px;
+            height: 55px;
+            top: 50px;
+            left: 0;
+            background: #84cc16;
+            border-radius: 12px 12px 5px 5px;
+            z-index: 2;
+        }
+
+        .car-glass {
+            position: absolute;
+            top: 17px;
+            left: 85px;
+            width: 70px;
+            height: 33px;
+            background: #bfdbfe;
+            border-radius: 20px 20px 0 0;
+            z-index: 3;
+            border: 2px solid #64748b;
+        }
+
+        .wheel {
+            position: absolute;
+            width: 42px;
+            height: 42px;
+            background: #172554;
+            border-radius: 50%;
+            top: 85px;
+            z-index: 4;
+            border: 5px solid #64748b;
+        }
+
+        .wheel.left {
+            left: 35px;
+        }
+
+        .wheel.right {
+            right: 35px;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+        }
+
+        @media(max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>WORKING WITH jQuery</h1>
+    <p>Ex. No. 07 - JavaScript and jQuery Applications</p>
+    <p>Reg. No.: URK24CS1214</p>
+</header>
+
+
+<!-- QUESTION 1: BUDGET CALCULATOR -->
+
+<div class="container">
+
+    <h2>1. Budget Calculator App</h2>
+
+    <p>Enter the amount that you want to manage.</p>
+
+    <label><b>Total Amount (Rs.)</b></label>
+
+    <input type="number" id="amount" value="15000" min="0">
+
+    <h3>How would you like to divide your money?</h3>
+
+    <label>Room Rent (%)</label>
+    <input type="number" id="rentPercent" value="50" min="0">
+
+    <label>Accessories (%)</label>
+    <input type="number" id="accessoriesPercent" value="20" min="0">
+
+    <label>Emergency (%)</label>
+    <input type="number" id="emergencyPercent" value="20" min="0">
+
+    <label>Saving (%)</label>
+    <input type="number" id="savingPercent" value="10" min="0">
+
+    <button id="evaluate">Evaluate My Money</button>
+
+    <div class="result-box">
+
+        <div class="result-card rent">
+            <h3>Room Rent</h3>
+            <h2 id="rentResult">Rs. 7500</h2>
+        </div>
+
+        <div class="result-card accessories">
+            <h3>Accessories</h3>
+            <h2 id="accessoriesResult">Rs. 3000</h2>
+        </div>
+
+        <div class="result-card emergency">
+            <h3>Emergency</h3>
+            <h2 id="emergencyResult">Rs. 3000</h2>
+        </div>
+
+        <div class="result-card savings">
+            <h3>Saving</h3>
+            <h2 id="savingResult">Rs. 1500</h2>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- QUESTION 2: CAKE SHOP -->
+
+<div class="container">
+
+    <h2>2. Cake Shop - Order Cake</h2>
+
+    <p>Select the quantity of each cake and calculate your purchase bill.</p>
+
+    <div class="cake-grid">
+
+        <div class="cake-card">
+            <div class="cake-image">🎂</div>
+            <h3>Color Cake</h3>
+            <p>Price: Rs. 300</p>
+
+            <label>Quantity</label>
+            <input type="number" class="quantity" id="colorCake"
+                   value="2" min="0">
+        </div>
+
+        <div class="cake-card">
+            <div class="cake-image">🍫</div>
+            <h3>Brown Cake</h3>
+            <p>Price: Rs. 200</p>
+
+            <label>Quantity</label>
+            <input type="number" class="quantity" id="brownCake"
+                   value="1" min="0">
+        </div>
+
+        <div class="cake-card">
+            <div class="cake-image">🍰</div>
+            <h3>Milky Cake</h3>
+            <p>Price: Rs. 250</p>
+
+            <label>Quantity</label>
+            <input type="number" class="quantity" id="milkyCake"
+                   value="2" min="0">
+        </div>
+
+        <div class="cake-card">
+            <div class="cake-image">🍫</div>
+            <h3>Black Forest Cake</h3>
+            <p>Price: Rs. 500</p>
+
+            <label>Quantity</label>
+            <input type="number" class="quantity" id="blackCake"
+                   value="1" min="0">
+        </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top:20px;">
+
+        <button id="placeOrder">Place Order</button>
+
+    </div>
+
+    <div class="bill">
+
+        <h2>Purchase Order Bill!!</h2>
+
+        <h3>Total Price</h3>
+
+        <div class="total" id="cakeTotal">
+            Rs. 1650
+        </div>
+
+        <p id="orderMessage">Your order is ready to calculate.</p>
+
+    </div>
+
+</div>
+
+
+<!-- QUESTION 3: CAR WORKSHOP -->
+
+<div class="container">
+
+    <h2>3. Car Workshop</h2>
+
+    <p>Customize your car by changing its body colour, glass tint and tyre size.</p>
+
+    <div class="car-area">
+
+        <div class="car" id="car">
+
+            <div class="car-roof"></div>
+
+            <div class="car-glass" id="carGlass"></div>
+
+            <div class="car-body" id="carBody"></div>
+
+            <div class="wheel left" id="wheel1"></div>
+
+            <div class="wheel right" id="wheel2"></div>
+
+        </div>
+
+    </div>
+
+    <div class="controls">
+
+        <button id="changeCarColor">Change Car Color</button>
+
+        <button id="changeGlass">Change Glass Tint</button>
+
+        <button id="increaseTyre">Tyre Size Increase</button>
+
+        <button id="decreaseTyre">Tyre Size Decrease</button>
+
+        <button id="resetCar">Reset</button>
+
+    </div>
+
+    <p style="text-align:center; color:#64748b;">
+        Use the buttons to customize your car.
+    </p>
+
+</div>
+
+
+<footer>
+    <h3>JavaScript Lab - Exercise 07</h3>
+    <p>Working with jQuery</p>
+    <p>Register Number: URK24CS1214</p>
+</footer>
+
+
+<!-- JQUERY PROGRAMS -->
+
+<script>
+
+$(document).ready(function() {
+
+
+    // QUESTION 1: BUDGET CALCULATOR
+
+    $("#evaluate").click(function() {
+
+        let amount = Number($("#amount").val());
+
+        let rent = Number($("#rentPercent").val());
+        let accessories = Number($("#accessoriesPercent").val());
+        let emergency = Number($("#emergencyPercent").val());
+        let saving = Number($("#savingPercent").val());
+
+        let totalPercent = rent + accessories + emergency + saving;
+
+        if (
+            !Number.isFinite(amount) ||
+            !Number.isFinite(totalPercent) ||
+            amount <= 0 ||
+            rent < 0 || accessories < 0 ||
+            emergency < 0 || saving < 0 ||
+            totalPercent !== 100
+        ) {
+            alert("Please enter a valid amount and percentages totaling exactly 100%.");
+            return;
+        }
+
+        let rentAmount = amount * rent / 100;
+        let accessoriesAmount = amount * accessories / 100;
+        let emergencyAmount = amount * emergency / 100;
+        let savingAmount = amount * saving / 100;
+
+        $("#rentResult").text("Rs. " + rentAmount.toFixed(2));
+
+        $("#accessoriesResult").text(
+            "Rs. " + accessoriesAmount.toFixed(2)
+        );
+
+        $("#emergencyResult").text(
+            "Rs. " + emergencyAmount.toFixed(2)
+        );
+
+        $("#savingResult").text(
+            "Rs. " + savingAmount.toFixed(2)
+        );
+
+    });
+
+
+    // QUESTION 2: CAKE ORDER CALCULATOR
+
+    $("#placeOrder").click(function() {
+
+        let color = Number($("#colorCake").val());
+        let brown = Number($("#brownCake").val());
+        let milky = Number($("#milkyCake").val());
+        let black = Number($("#blackCake").val());
+
+        let quantities = [color, brown, milky, black];
+
+        if (quantities.some(q => !Number.isInteger(q) || q < 0)) {
+            alert("Please enter valid non-negative whole number quantities.");
+            return;
+        }
+
+        let total =
+            (color * 300) +
+            (brown * 200) +
+            (milky * 250) +
+            (black * 500);
+
+        $("#cakeTotal").text("Rs. " + total);
+
+        $("#orderMessage").text(
+            "Order placed successfully! Total cakes: " +
+            (color + brown + milky + black)
+        );
+
+        alert("Your cake order has been placed!\nTotal Amount: Rs. " + total);
+
+    });
+
+
+    // QUESTION 3: CAR WORKSHOP
+
+    let tyreSize = 42;
+
+    let carColors = [
+        "#ef4444",
+        "#2563eb",
+        "#16a34a",
+        "#f59e0b",
+        "#9333ea",
+        "#ec4899"
+    ];
+
+    let glassColors = [
+        "#bfdbfe",
+        "#94a3b8",
+        "#475569",
+        "#1e293b"
+    ];
+
+    let colorIndex = 0;
+    let glassIndex = 0;
+
+
+    // Change car body colour
+
+    $("#changeCarColor").click(function() {
+
+        colorIndex = (colorIndex + 1) % carColors.length;
+
+        $("#carBody").css("background-color", carColors[colorIndex]);
+
+    });
+
+
+    // Change glass tint
+
+    $("#changeGlass").click(function() {
+
+        glassIndex = (glassIndex + 1) % glassColors.length;
+
+        $("#carGlass").css("background-color", glassColors[glassIndex]);
+
+    });
+
+
+    // Increase tyre size
+
+    $("#increaseTyre").click(function() {
+
+        if (tyreSize < 65) {
+
+            tyreSize += 5;
+
+            $(".wheel").css({
+                "width": tyreSize + "px",
+                "height": tyreSize + "px"
+            });
+
+        }
+
+    });
+
+
+    // Decrease tyre size
+
+    $("#decreaseTyre").click(function() {
+
+        if (tyreSize > 25) {
+
+            tyreSize -= 5;
+
+            $(".wheel").css({
+                "width": tyreSize + "px",
+                "height": tyreSize + "px"
+            });
+
+        }
+
+    });
+
+
+    // Reset car
+
+    $("#resetCar").click(function() {
+
+        tyreSize = 42;
+
+        colorIndex = 0;
+        glassIndex = 0;
+
+        $("#carBody").css("background-color", "#84cc16");
+
+        $("#carGlass").css("background-color", "#bfdbfe");
+
+        $(".wheel").css({
+            "width": "42px",
+            "height": "42px"
+        });
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
